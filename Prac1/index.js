@@ -68,25 +68,25 @@ console.log('task3 answer: ', obj === cloned);
 
 //task4 
 function wrping(fn) {
-    const cache = {};
-    
-    return function(...args) {
-      const key = JSON.stringify(args); //унікальність ключів
-      if (key in cache) {
-        return cache[key];
-      }
-      const result = fn.apply(this, args);
-      cache[key] = result;
-      return result;
-    }
+    const cache = new Map();
+    return function () {
+        const args = Array.from(arguments);
+        const key = JSON.stringify(args); // unique keys
+        if (cache.has(key)) {
+            return cache.get(key);
+        }
+        const result = fn.apply(this, args);
+        cache.set(key, result);
+        return result;
+    };
 }
 
 function sum(a, b, c) {
     return a + b + c;
 }
-  
-const wrappedAdd = wrping(sum);  
 
-console.log('task4 aswer for 2, 2, 3: ', wrappedAdd(2, 2, 3)); 
+const wrappedAdd = wrping(sum);
+console.log('task4 answer for 2, 2, 3: ', wrappedAdd(2, 2, 3));
+
   
   
