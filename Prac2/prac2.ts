@@ -68,27 +68,27 @@ console.log("task3 answer: ", obj === cloned);
 
 //task4
 
-function wrping(fn: Function) {
-  const cache: {[key: string]: any} = {};
-  
-  return function(...args: any[]) {
-    const key = JSON.stringify(args); // unique keys
-    if (key in cache) {
-      return cache[key];
+function wrping(fn: (...args: number[]) => number) {
+    const cache: Map<string, number> = new Map();
+    
+    return function(...args: number[]) {
+      const key = JSON.stringify(args); // unique keys
+      if (cache.has(key)) {
+        return cache.get(key);
+      }
+      const result = fn.apply(this, args);
+      cache.set(key, result);
+      return result;
     }
-    const result = fn.apply(this, args);
-    cache[key] = result;
-    return result;
   }
-}
-
-function sum(a: number, b: number, c: number): number {
-  return a + b + c;
-}
-
-const wrappedAdd = wrping(sum);  
-
-console.log('task4 answer for 2, 2, 3: ', wrappedAdd(2, 2, 3)); 
-
+  
+  function sum(a: number, b: number, c: number): number {
+    return a + b + c;
+  }
+  
+  const wrappedAdd = wrping(sum);
+  
+  console.log('task4 answer for 2, 2, 3: ', wrappedAdd(2, 2, 3));
+  
 
 
