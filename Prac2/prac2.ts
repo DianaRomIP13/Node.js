@@ -22,24 +22,18 @@ console.log('task1 answer for 2,5,7,1,6,5,11: ', add(2)(5)(7)(1)(6)(5)(11)());
 //task2
 
 function is_anagram(str1: string, str2: string): boolean {
-  let arr1: string[] = str1.split('').sort();
-  let arr2: string[] = str2.split('').sort();
-
-  if (arr1.length !== arr2.length) {
+  if (str1.length !== str2.length) {
     return false;
   }
 
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return false;
-    }
-  }
+  const sortedStr1 = str1.split('').sort().join('');
+  const sortedStr2 = str2.split('').sort().join('');
 
-  return true;
+  return sortedStr1 === sortedStr2;
 }
 
 console.log('task2 answer for true: ', is_anagram('слоник', 'кислон'));
-console.log('task2 answer for false:' , is_anagram('слоник', 'бджілка'));
+console.log('task2 answer for false:', is_anagram('слоник', 'бджілка'));
 
 //task3
 
